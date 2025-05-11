@@ -1,0 +1,199 @@
+﻿@model EmployeeMgt.Models.Employee
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Create New Employee</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <div class="text-center mb-4">
+                            <div class="avatar-upload">
+                                <div class="avatar-preview">
+                                    <div id="imagePreview" style="background-image: url('/images/default-avatar.png');">
+                                    </div>
+                                </div>
+                                <div class="avatar-edit">
+                                    <input type="file" id="imageUpload" name="PhotoFile" accept=".png, .jpg, .jpeg" />
+                                    <label for="imageUpload"><i class="bi bi-camera"></i></label>
+                                </div>
+                            </div>
+                            <p class="text-muted small mt-2">Upload employee photo</p>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                                    <label asp-for="FirstName">First Name</label>
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                                    <label asp-for="LastName">Last Name</label>
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 class="border-bottom pb-2 mb-3">Position Information</h5>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Designation" class="form-control" placeholder="Designation" />
+                                    <label asp-for="Designation">Designation</label>
+                                    <span asp-validation-for="Designation" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="DepartmentName" class="form-select">
+                                        <option value="">Select Department</option>
+                                        <option value="HR">Human Resources</option>
+                                        <option value="Tech">Technology</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Operations">Operations</option>
+                                    </select>
+                                    <label asp-for="DepartmentName">Department</label>
+                                    <span asp-validation-for="DepartmentName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="JobTitle" class="form-control" placeholder="Job Title" />
+                            <label asp-for="JobTitle">Job Title</label>
+                            <span asp-validation-for="JobTitle" class="text-danger"></span>
+                        </div>
+
+                        <h5 class="border-bottom pb-2 mb-3">Contact Information</h5>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" placeholder="Email" />
+                            <label asp-for="Email">Email Address</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ContactNo" class="form-control" placeholder="Contact Number" />
+                            <label asp-for="ContactNo">Contact Number</label>
+                            <span asp-validation-for="ContactNo" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Address" class="form-control" placeholder="Address" style="height: 100px"></textarea>
+                            <label asp-for="Address">Address</label>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary me-2">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Create Employee
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .avatar-upload {
+        position: relative;
+        max-width: 150px;
+        margin: 0 auto;
+    }
+
+    .avatar-edit {
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+        z-index: 1;
+    }
+
+        .avatar-edit input {
+            display: none;
+        }
+
+        .avatar-edit label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            margin-bottom: 0;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 1px solid #d2d2d2;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-weight: normal;
+            transition: all .2s ease-in-out;
+        }
+
+            .avatar-edit label:hover {
+                background: #f1f1f1;
+            }
+
+    .avatar-preview {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        border-radius: 50%;
+        border: 5px solid #F8F8F8;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    }
+
+        .avatar-preview > div {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+    .form-floating > .form-control,
+    .form-floating > .form-select {
+        height: calc(3.5rem + 2px);
+        line-height: 1.25;
+    }
+
+    .form-floating > label {
+        padding: 1rem 0.75rem;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Image preview functionality
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+
+        imageUpload.addEventListener('change', function(e) {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.style.backgroundImage = `url(${e.target.result})`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

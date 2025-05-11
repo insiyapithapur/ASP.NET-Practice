@@ -1,0 +1,178 @@
+﻿@model IEnumerable<EmployeeMgt.Models.Employee>
+@{
+    ViewData["Title"] = "Employee Directory";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Employee Directory</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            Add New Employee
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="employeeTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Employee</th>
+                            <th>Designation</th>
+                            <th>Department</th>
+                            <th>Contact Info</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var employee in Model)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-3">
+                                            @if (!string.IsNullOrEmpty(employee.Photo))
+                                            {
+                                                <img src="@employee.Photo" class="rounded-circle" width="50" height="50" alt="@employee.FirstName's photo" />
+                                            }
+                                            else
+                                            {
+                                                <div class="avatar-initials rounded-circle bg-secondary text-white">
+                                                    @(employee.FirstName[0].ToString().ToUpper())@(employee.LastName[0].ToString().ToUpper())
+                                                </div>
+                                            }
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">@employee.FirstName @employee.LastName</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@employee.Designation</td>
+                                <td>
+                                    <span class="badge bg-light text-dark">@employee.DepartmentName</span>
+                                </td>
+                                <td>
+                                    <div>@employee.Email</div>
+                                    <div>@employee.ContactNo</div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="action-buttons">
+                                        <a asp-action="Details" asp-route-id="@employee.Id" class="btn-action btn-view" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@employee.Id" class="btn-action btn-edit" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@employee.Id" class="btn-action btn-delete" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .avatar-initials {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        font-weight: bold;
+    }
+
+    #employeeTable th, #employeeTable td {
+        vertical-align: middle;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        transition: all 0.2s;
+        color: #fff;
+    }
+
+    .btn-view {
+        background-color: #0d6efd;
+    }
+
+    .btn-edit {
+        background-color: #6c757d;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+    .btn-action:hover {
+        opacity: 0.85;
+        color: #fff;
+    }
+
+    .btn-action i {
+        font-size: 1rem;
+    }
+
+    .card {
+        border: none;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .badge {
+        font-weight: 500;
+        padding: 5px 10px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toUpperCase();
+                const table = document.getElementById('employeeTable');
+                const tr = table.getElementsByTagName('tr');
+
+                for (let i = 1; i < tr.length; i++) {
+                    const td = tr[i].getElementsByTagName('td');
+                    let txtValue = '';
+
+                    for (let j = 0; j < td.length; j++) {
+                        txtValue += td[j].textContent || td[j].innerText;
+                    }
+
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = '';
+                    } else {
+                        tr[i].style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Initialize tooltips if Bootstrap's tooltip component is available
+        if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+    });
+</script>

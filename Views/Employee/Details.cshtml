@@ -1,0 +1,28 @@
+﻿@model EmployeeMgt.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<h2>Employee Details</h2>
+
+<div>
+    <strong>Photo:</strong><br />
+    @if (!string.IsNullOrEmpty(Model.Photo))
+    {
+        <img src="@Model.Photo" width="150" height="150" alt="Employee Photo" />
+    }
+    else
+    {
+        <span>No photo uploaded.</span>
+    }
+</div>
+
+<p><strong>First Name:</strong> @Model.FirstName</p>
+<p><strong>Last Name:</strong> @Model.LastName</p>
+<p><strong>Designation:</strong> @Model.Designation</p>
+<p><strong>Department:</strong> @Model.DepartmentName</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Contact:</strong> @Model.ContactNo</p>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
